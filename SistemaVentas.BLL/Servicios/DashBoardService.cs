@@ -38,7 +38,8 @@ namespace SistemaVentas.BLL.Servicios {
       int total = 0;
       IQueryable<Venta> venta_query = await venta_repository.Consult();
 
-      if (venta_query.Count() > 0) {
+			/*verificar si existen ventas*/
+			if (venta_query.Count() > 0) {
         /*obtener total de ventas registradas hace 7 dias*/
         var tabla_venta = RetornarVentas(venta_query, -7);
         total = tabla_venta.Count();
@@ -55,7 +56,7 @@ namespace SistemaVentas.BLL.Servicios {
       if (venta_query.Count() > 0) {
 
         var tabla_venta = RetornarVentas(venta_query, -7);
-        /*Actualizando variable resultado, debe hacer la suma de todos los ingresos*/
+        /*Actualizando variable resultado, debe hacer la suma de todos los ingresos de ventas*/
         resultado = tabla_venta.Select(v => v.Total).Sum(v => v.Value);
       }
       return Convert.ToString(resultado, new CultureInfo("es-ES"));
@@ -68,6 +69,7 @@ namespace SistemaVentas.BLL.Servicios {
       int total = producto_query.Count();
       return total;
     }
+
     /*Accede con string y retorna con entero */
     private async Task<Dictionary<string, int>> VentasUltimaSemana() {
 
@@ -81,7 +83,7 @@ namespace SistemaVentas.BLL.Servicios {
           .GroupBy(v => v.FechaRegistro.Value.Date)
           /*Key es la agrupacion de las fechas*/
           .OrderBy(g => g.Key)
-          /*Obtenemos un total por cada agrupacion de fecha que se haga*/
+           
           .Select(dv => new { fecha = dv.Key.ToString("dd/MM/yyyy"), total = dv.Count() })
           /*Todo lo anterior se convertira en un diccionario*/
           .ToDictionary(keySelector: r => r.fecha, elementSelector: r => r.total);

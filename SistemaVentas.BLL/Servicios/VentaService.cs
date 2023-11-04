@@ -30,7 +30,7 @@ namespace SistemaVentas.BLL.Servicios {
         var venta_generada = await venta_repository.registrarVenta(mapper.Map<Venta>(model));
 
         if (venta_generada.IdVenta == 0)
-          throw new TaskCanceledException("No se puedo registrar venta");
+          throw new TaskCanceledException("No se pudo registrar venta");
 
         /*Esta venta generada es retornada con numero de documento #0000 y el id venta*/
         return mapper.Map<VentaDTO>(venta_generada);

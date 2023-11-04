@@ -12,7 +12,7 @@ using SistemaVentas.DTOs;
 using SistemaVentas.Models;
 
 namespace SistemaVentas.BLL.Servicios {
-  internal class ProductoService : IProductoService {
+  public class ProductoService : IProductoService {
 
     private readonly IGenericRepository<Producto> producto_repository;
     private readonly IMapper mapper;

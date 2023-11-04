@@ -31,11 +31,12 @@ namespace SistemaVentas.DAL.Repositorios {
 
             producto_encontrado.Stock = producto_encontrado.Stock - detalle_venta.Cantidad;
             db_context.Productos.Update(producto_encontrado);
-          }
+          } 
 
           await db_context.SaveChangesAsync();
 
-          NumeroDocumento correlativo = db_context.NumeroDocumentos.First();
+					/*Numero correlativo de venta*/
+					NumeroDocumento correlativo = db_context.NumeroDocumentos.First();
           correlativo.UltimoNumero = correlativo.UltimoNumero + 1;
           correlativo.FechaRegistro = DateTime.Now;
 
@@ -53,7 +54,8 @@ namespace SistemaVentas.DAL.Repositorios {
           await db_context.Venta.AddAsync(model);
           await db_context.SaveChangesAsync();
 
-          venta_generada = model;
+					/*Venta generada con numero correlativo*/
+					venta_generada = model;
           transaction.Commit();
 
         } catch (Exception) {
